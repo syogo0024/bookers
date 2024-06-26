@@ -1,0 +1,43 @@
+<h1>Books</h1>
+
+<% @books.each do |book| %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>body</th>
+  </tr>
+  <tr>
+    <td><%= book.title %></td>
+    <td><%= book.body %></td>
+    <td><%= link_to 'Show', book %></td>
+    <td><%= link_to 'Edit', edit_book_path(book) %></td>
+    <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+</table>
+
+<% end %>
+
+<h1>New book</h1>
+<!-- form_with部分 -->
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+        <% @book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
+
+<%= form_with model: @book, url: '/books', method: :post do |f| %>
+  <div>Title</div>
+  <%= f.text_field :title %>
+
+  <div>Body</div>
+  <%= f.text_area :body %>
+  <div><%= f.submit 'Create Book' %></div>
+<% end %>
